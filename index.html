@@ -425,6 +425,8 @@
         .progress-dots {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .dot {
@@ -434,6 +436,7 @@
             background: rgba(255,255,255,0.2);
             transition: all 0.3s;
             cursor: pointer;
+            margin: 2px;
         }
 
         .dot.active {
@@ -499,6 +502,7 @@
             .astronaut { font-size: 3rem; }
             .astronaut.pookie { top: 65%; left: 5%; }
             .astronaut.mokyy { top: 20%; right: 5%; }
+            #wheel-result { font-size: 1.2rem !important; }
         }
     </style>
 </head>
@@ -609,6 +613,81 @@
                 <p id="closing-response"></p>
             </div>
         </div>
+
+        <!-- Slide 8: The Reality Check -->
+        <div class="slide">
+            <div style="max-width: 800px; background: rgba(11, 15, 25, 0.8); padding: 2rem; border-radius: 12px;">
+                <h2>The Reality Check</h2>
+                <p>So... you forgave me (thank God).</p>
+                <p>But we are now officially stranded 1.4 billion kilometers from Earth. And as your incredibly capable boyfriend, it is my duty to provide for you.</p>
+                <p style="margin-top: 2rem; font-size: 1.5rem; color: var(--accent-gold); font-style: italic;">Welcome to the rest of our lives on Saturn.</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Building Our Base -->
+        <div class="slide" style="align-items: center; position: relative;">
+            <div style="max-width: 800px; text-align: center; background: rgba(11, 15, 25, 0.8); padding: 2rem; border-radius: 12px;">
+                <h2>Our Saturn Base</h2>
+                <p>Since Saturn is a gas giant with no solid ground, I couldn't build you a space station.</p>
+                <p>Instead, I built us a high-tech, impenetrable Space Bubble™.</p>
+                <button class="summon-btn" id="bubble-btn" onclick="inflateBubble()" style="margin-top: 2rem; margin-bottom: 0;">🫧 INFLATE SPACE BUBBLE 🫧</button>
+                <p id="bubble-result" style="display: none; margin-top: 2rem; color: var(--accent-rose); font-weight: bold; font-size: 1.5rem;"></p>
+            </div>
+        </div>
+
+        <!-- Slide 10: First Contact -->
+        <div class="slide">
+            <div style="max-width: 800px; background: rgba(11, 15, 25, 0.8); padding: 2rem; border-radius: 12px;">
+                <h2>First Contact 👽</h2>
+                <p>Oh no. We have encountered the native Saturn Aliens.</p>
+                <p>They look extremely hungry, and they are pointing their laser forks at us.</p>
+                <p style="margin-bottom: 2rem; font-size: 1.2rem; color: var(--accent-gold);">Quick! What should Pookie do to save Mokyy?!</p>
+                
+                <div class="button-group" style="flex-direction: column; gap: 1rem;" id="alien-options">
+                    <button onclick="alienChoice('eat')">"EAT ME INSTEAD! SAVE HER!"</button>
+                    <button onclick="alienChoice('queen')">"BOW DOWN! SHE IS A GODDESS!"</button>
+                </div>
+                <div id="alien-result" style="display: none; margin-top: 2rem; background: rgba(0, 0, 0, 0.5); padding: 1.5rem; border-radius: 12px; font-size: 1.2rem;"></div>
+            </div>
+        </div>
+
+        <!-- Slide 11: The Trophy Boyfriend -->
+        <div class="slide">
+            <div style="max-width: 800px; background: rgba(11, 15, 25, 0.8); padding: 2rem; border-radius: 12px;">
+                <h2>The Royal Decree</h2>
+                <p>As the new Supreme Alien Queen of Saturn, you are now worshipped by billions of gas creatures.</p>
+                <p>I am now officially your Alien Trophy Boyfriend.</p>
+                <p>And as your trophy boyfriend who got us into this mess by calling you dumb names, saying "sorry" isn't enough anymore.</p>
+                <p style="margin-top: 2rem; font-size: 1.5rem; color: var(--accent-gold); font-style: italic;">I must pay the penalty.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: The Punishment Wheel -->
+        <div class="slide" style="align-items: center; position: relative;">
+            <div style="max-width: 800px; text-align: center; background: rgba(11, 15, 25, 0.8); padding: 2rem; border-radius: 12px;">
+                <h2>The Pookie Penalty Generator</h2>
+                <p style="margin-bottom: 2rem;">Press the button to generate my real-life penalty. I legally have to do whatever it lands on to make it up to you.</p>
+                
+                <button class="summon-btn" onclick="spinWheel()" style="margin-top: 0; margin-bottom: 2rem; border-color: #d9534f; color: #d9534f; background: rgba(217, 83, 79, 0.1);">🎲 SPIN THE WHEEL 🎲</button>
+                
+                <div id="wheel-result" style="min-height: 100px; font-size: 1.8rem; color: var(--accent-gold); font-family: var(--font-heading); background: rgba(0, 0, 0, 0.5); padding: 2rem; border-radius: 12px; border: 2px solid var(--accent-gold); display: flex; align-items: center; justify-content: center;">
+                    Waiting for spin...
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.5);">*You can keep spinning until you get the one you want.</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Final Closing -->
+        <div class="slide">
+            <div class="closing-slide" style="width: 100%; max-width: 800px; margin: 0 auto;">
+                <h2>I'm really, really sorry.</h2>
+                <p class="sincere-text" style="margin-top: 2rem; text-align: center; background: none; padding: 0;">
+                    I would travel to Saturn, float in the freezing vacuum of space, and get laughed at by aliens every single day if it meant I got to keep you.
+                </p>
+                <p style="margin-top: 2rem; font-size: 2rem; color: var(--accent-gold);">I love you, Mokyy.</p>
+                <p style="margin-top: 1rem; font-size: 1.2rem; color: var(--accent-rose);">— Pookie ❤️</p>
+            </div>
+        </div>
     </div>
 
     <div class="controls">
@@ -693,7 +772,7 @@
                     saturn.style.left = '';
                     saturn.style.top = '';
                     saturn.style.transform = '';
-                } else if (currentSlide === 4 || currentSlide === 5 || currentSlide === 6) { 
+                } else if (currentSlide >= 4) { 
                     saturn.classList.add('summoned');
                     saturn.style.opacity = 0.3;
                 }
@@ -775,32 +854,61 @@
             document.getElementById('apology-header').innerText = "Okay, speaking as a ghost now...";
         }
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
-        });
-
-        // Mouse Parallax for Saturn
-        document.addEventListener('mousemove', (e) => {
-            if (saturnSummoned) return; 
-            
-            const x = (e.clientX / window.innerWidth - 0.5) * 40;
-            const y = (e.clientY / window.innerHeight - 0.5) * 40;
-            
-            const baseTransform = saturn.style.transform.replace(/translate\([^)]+\)\s*/, '');
-            saturn.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) ${baseTransform}`;
-        });
-
         // Response Logic & Confetti
         function respond(choice) {
             const responseText = document.getElementById('closing-response');
             if (choice === 'forgive') {
-                responseText.innerHTML = "Thank you so much, terma! ❤️<br><br><span style='font-size:0.9em; opacity:0.7;'>...wait. Did I just type that?<br>DAMMIT. (🏃‍♂️💨 *runs away*)</span>";
+                responseText.innerHTML = "Thank you so much, terma! ❤️<br><br><span style='font-size:0.9em; opacity:0.7;'>...wait. Did I just type that?<br>DAMMIT. (🏃‍♂️💨 *runs away*)</span><br><br><button onclick='nextSlide()' style='font-size: 0.9rem; margin-top: 1rem;'>Continue our journey ➡️</button>";
                 triggerConfetti();
             } else if (choice === 'mad') {
-                responseText.innerHTML = "Wait no, I already bought us matching spacesuits! 😭<br><br><span style='font-size:0.9em; opacity:0.7;'>Pls don't leave me terma... WAIT I DID IT AGAIN. (🏃‍♂️💨 *runs away*)</span>";
+                responseText.innerHTML = "Wait no, I already bought us matching spacesuits! 😭<br><br><span style='font-size:0.9em; opacity:0.7;'>Pls don't leave me terma... WAIT I DID IT AGAIN. (🏃‍♂️💨 *runs away*)</span><br><br><button onclick='nextSlide()' style='font-size: 0.9rem; margin-top: 1rem;'>Give him one more chance ➡️</button>";
             }
+        }
+
+        // Extended Journey Mechanics
+        function inflateBubble() {
+            const btn = document.getElementById('bubble-btn');
+            btn.style.display = 'none';
+            const res = document.getElementById('bubble-result');
+            res.style.display = 'block';
+            res.innerHTML = "💥 POP 💥<br><span style='font-size:1.2rem; font-weight:normal; color:#fff;'>I inflated it too much because I am an idiot.<br>We will just float in the freezing vacuum of space.</span>";
+            document.body.classList.add('shake');
+            setTimeout(() => document.body.classList.remove('shake'), 500);
+        }
+
+        function alienChoice(choice) {
+            document.getElementById('alien-options').style.display = 'none';
+            const res = document.getElementById('alien-result');
+            res.style.display = 'block';
+            if (choice === 'eat') {
+                res.innerHTML = "👽 <strong>Result:</strong> They took one bite of me, realized I have absolutely zero brain cells, and spat me out in disgust. We survive!";
+            } else {
+                res.innerHTML = "👽 <strong>Result:</strong> They took one look at you and bowed down. You are now the Supreme Alien Queen of Saturn. I am now your pet.";
+            }
+        }
+
+        function spinWheel() {
+            const resultDiv = document.getElementById('wheel-result');
+            const punishments = [
+                "Pookie must buy Mokyy whatever food she wants within 24 hours.",
+                "Pookie must write a 500-word essay on why Mokyy is always right.",
+                "Pookie must let Mokyy pick the next 3 movies you watch.",
+                "Pookie must buy Mokyy a cute little gift this week.",
+                "Pookie owes Mokyy a fancy dinner date.",
+                "Pookie is not allowed to speak for 30 minutes while Mokyy rants."
+            ];
+            
+            let spins = 0;
+            const interval = setInterval(() => {
+                resultDiv.innerText = punishments[Math.floor(Math.random() * punishments.length)];
+                spins++;
+                if (spins > 20) {
+                    clearInterval(interval);
+                    // Final spin
+                    resultDiv.innerHTML = "<strong>" + punishments[Math.floor(Math.random() * punishments.length)] + "</strong>";
+                    triggerConfetti();
+                }
+            }, 50);
         }
 
         function triggerConfetti() {
@@ -824,6 +932,23 @@
                 }, i * 20);
             }
         }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Mouse Parallax for Saturn
+        document.addEventListener('mousemove', (e) => {
+            if (saturnSummoned) return; 
+            
+            const x = (e.clientX / window.innerWidth - 0.5) * 40;
+            const y = (e.clientY / window.innerHeight - 0.5) * 40;
+            
+            const baseTransform = saturn.style.transform.replace(/translate\([^)]+\)\s*/, '');
+            saturn.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) ${baseTransform}`;
+        });
     </script>
 </body>
 </html>

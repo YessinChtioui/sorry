@@ -101,7 +101,91 @@
             top: 50% !important;
             transform: translate(-50%, -50%) scale(2.2) !important;
             filter: drop-shadow(0 0 60px rgba(230,193,122,0.5));
-            transition: all 3s cubic-bezier(0.25, 1, 0.5, 1) !important; /* Slower zoom in */
+            transition: all 3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+
+        /* Astronauts */
+        .astronauts {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 15;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .astronauts.visible {
+            opacity: 1;
+        }
+
+        .astronaut {
+            position: absolute;
+            font-size: 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .astronaut span {
+            display: inline-block;
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        .astronaut.pookie {
+            top: 60%;
+            left: 15%;
+        }
+        .astronaut.pookie span {
+            animation-delay: 0s;
+        }
+        
+        .astronaut.mokyy {
+            top: 25%;
+            right: 15%;
+        }
+        .astronaut.mokyy span {
+            animation-delay: -1s;
+        }
+
+        .nametag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: white;
+            margin-top: 0.5rem;
+            backdrop-filter: blur(4px);
+            font-family: monospace;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        @keyframes float {
+            from { transform: translateY(-10px) rotate(-5deg); }
+            to { transform: translateY(10px) rotate(5deg); }
+        }
+
+        .astronaut.sucked {
+            animation: suckedIntoSpace 2s forwards cubic-bezier(0.5, 0, 1, 1);
+        }
+        @keyframes suckedIntoSpace {
+            to {
+                transform: translate(300px, -300px) scale(0) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        .astronaut.mokyy.sucked {
+            animation: suckedIntoSpaceMokyy 2s forwards cubic-bezier(0.5, 0, 1, 1);
+        }
+        @keyframes suckedIntoSpaceMokyy {
+            to {
+                transform: translate(-300px, 300px) scale(0) rotate(-720deg);
+                opacity: 0;
+            }
         }
 
         /* Slides Container */
@@ -209,18 +293,19 @@
         .delivery-success-text {
             opacity: 0;
             transition: opacity 1s;
-            transition-delay: 2s; /* Wait for warp */
+            transition-delay: 2s;
             text-align: center;
             position: absolute;
-            bottom: 15vh;
+            bottom: 10vh;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
             background: rgba(11, 15, 25, 0.8);
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid rgba(230, 193, 122, 0.3);
-            max-width: 500px;
+            max-width: 600px;
+            z-index: 20;
         }
 
         .delivery-success-text.visible {
@@ -375,8 +460,26 @@
             }
         }
 
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        body.shake {
+            animation: shake 0.5s;
+            animation-iteration-count: 2; /* 1 second total */
+        }
+
         @media (prefers-reduced-motion: reduce) {
-            .saturn-motif, .slides-container, .star {
+            .saturn-motif, .slides-container, .star, .astronaut span {
                 transition: none !important;
                 animation: none !important;
             }
@@ -393,6 +496,9 @@
             .button-group {
                 flex-direction: column;
             }
+            .astronaut { font-size: 3rem; }
+            .astronaut.pookie { top: 65%; left: 5%; }
+            .astronaut.mokyy { top: 20%; right: 5%; }
         }
     </style>
 </head>
@@ -452,14 +558,26 @@
             
             <div class="delivery-success-text" id="delivery-text">
                 <h2 style="margin-bottom: 0.5rem; font-family: var(--font-body); font-weight: 600;">Welcome to Orbit!</h2>
-                <p>We are currently floating in space. Do not open the window, we will both die. ❤️</p>
+                <p id="orbit-p">We are currently floating in space. Do not open the window, we will both die. ❤️</p>
+                <button id="window-btn" onclick="openWindow()" style="background: rgba(217, 83, 79, 0.2); border-color: #d9534f; color: #d9534f; margin-top: 1rem; display: none; font-size: 0.9rem; margin-left: auto; margin-right: auto;">🚫 OPEN WINDOW 🚫</button>
+            </div>
+
+            <div class="astronauts" id="astronauts">
+                <div class="astronaut pookie" id="astro-pookie">
+                    <span>🧑‍🚀</span>
+                    <div class="nametag">Pookie</div>
+                </div>
+                <div class="astronaut mokyy" id="astro-mokyy">
+                    <span>👩‍🚀</span>
+                    <div class="nametag">Mokyy</div>
+                </div>
             </div>
         </div>
 
         <!-- Slide 5: The Real Apology -->
         <div class="slide">
             <div style="max-width: 800px;">
-                <h2>Okay, but seriously...</h2>
+                <h2 id="apology-header">Okay, but seriously...</h2>
                 <p class="sincere-text">
                     I really am sorry for being an absolute idiot. You are the smartest, most beautiful girl, and I have no idea why I said that stuff. My mouth just moved faster than my brain could process. You don't deserve to be called those names, even when we're playfully arguing. I was completely wrong, and I'm really sorry.
                 </p>
@@ -510,12 +628,10 @@
             star.style.width = Math.random() * 4 + 'px';
             star.style.height = star.style.width;
             
-            // Randomize position in 3D space
             star.style.left = (Math.random() * 200 - 50) + 'vw';
             star.style.top = (Math.random() * 200 - 50) + 'vh';
             star.style.opacity = Math.random() * 0.8 + 0.2;
             
-            // Randomize animation delay for warp effect
             star.style.animationDelay = Math.random() * 2 + 's';
             
             starfield.appendChild(star);
@@ -542,10 +658,8 @@
         const dots = document.querySelectorAll('.dot');
 
         function updateUI() {
-            // Move container
             container.style.transform = `translateX(-${currentSlide * 100}vw)`;
             
-            // Update classes
             slides.forEach((slide, index) => {
                 if (index === currentSlide) {
                     slide.classList.add('active');
@@ -554,16 +668,13 @@
                 }
             });
 
-            // Update dots
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSlide);
             });
 
-            // Update buttons
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === slides.length - 1;
 
-            // Handle Saturn Visibility
             if (!saturnSummoned) {
                 if (currentSlide < 3) {
                     saturn.style.opacity = 0.05;
@@ -571,24 +682,20 @@
                     saturn.style.left = `${80 - currentSlide * 5}%`;
                     saturn.style.top = '50%';
                 } else if (currentSlide === 3) {
-                    // Ready to summon
                     saturn.style.opacity = 0;
                 } else {
                     saturn.style.opacity = 0.05;
                 }
             } else {
-                // If it HAS been summoned (we are in orbit)
                 if (currentSlide === 3) {
                     saturn.classList.add('summoned');
-                    // Clear inline styles so the CSS class takes over completely
                     saturn.style.opacity = '';
                     saturn.style.left = '';
                     saturn.style.top = '';
                     saturn.style.transform = '';
                 } else if (currentSlide === 4 || currentSlide === 5 || currentSlide === 6) { 
-                    // Keep Saturn massive in the background for the rest of the tour
                     saturn.classList.add('summoned');
-                    saturn.style.opacity = 0.3; // Dim it a bit so text is readable
+                    saturn.style.opacity = 0.3;
                 }
             }
         }
@@ -616,23 +723,56 @@
             saturnSummoned = true;
             document.getElementById('summon-btn').classList.add('clicked');
             
-            // Start warp speed stars
             document.getElementById('starfield').classList.add('warp');
             
-            // Clear inline styles immediately so the CSS animation applies
             saturn.style.opacity = '';
             saturn.style.left = '';
             saturn.style.top = '';
             saturn.style.transform = '';
             
-            // Bring in massive Saturn
             saturn.classList.add('summoned');
             
-            // Stop warp and show welcome text after 2.5 seconds
             setTimeout(() => {
                 document.getElementById('starfield').classList.remove('warp');
                 document.getElementById('delivery-text').classList.add('visible');
+                document.getElementById('astronauts').classList.add('visible');
+                document.getElementById('window-btn').style.display = 'block';
             }, 2500);
+        }
+
+        function openWindow() {
+            // Flash screen
+            const flash = document.createElement('div');
+            flash.style.position = 'fixed';
+            flash.style.top = 0; flash.style.left = 0; flash.style.width = '100vw'; flash.style.height = '100vh';
+            flash.style.backgroundColor = '#fff';
+            flash.style.zIndex = 1000;
+            flash.style.transition = 'opacity 0.5s';
+            document.body.appendChild(flash);
+            
+            setTimeout(() => { flash.style.opacity = 0; }, 50);
+            setTimeout(() => { flash.remove(); }, 550);
+
+            // Suck astronauts
+            document.getElementById('astro-pookie').classList.add('sucked');
+            document.getElementById('astro-mokyy').classList.add('sucked');
+            
+            // Shake the screen
+            document.body.classList.add('shake');
+            setTimeout(() => { document.body.classList.remove('shake'); }, 1000);
+
+            // Change text
+            document.getElementById('orbit-p').innerHTML = "<strong style='color:#d9534f; font-size: 1.2rem;'>WHY DID YOU PRESS IT?!</strong><br>We are literally dead. Vacuum of space. Zero oxygen.<br>Are you happy now?";
+            
+            const btn = document.getElementById('window-btn');
+            btn.innerText = "👻 Continue as ghosts 👻";
+            btn.style.borderColor = "#e6c17a";
+            btn.style.color = "#e6c17a";
+            btn.style.background = "rgba(230, 193, 122, 0.1)";
+            btn.onclick = () => { nextSlide(); };
+
+            // Change slide 5 title
+            document.getElementById('apology-header').innerText = "Okay, speaking as a ghost now...";
         }
 
         // Keyboard navigation
@@ -643,7 +783,6 @@
 
         // Mouse Parallax for Saturn
         document.addEventListener('mousemove', (e) => {
-            // Disable parallax once we're in orbit (slide 3 and beyond)
             if (saturnSummoned) return; 
             
             const x = (e.clientX / window.innerWidth - 0.5) * 40;
